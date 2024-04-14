@@ -5,9 +5,9 @@
 // $dbname = 'alumnidb';
 
 $servername = 'localhost';
-$username = 'u276981324_tugade';
-$password = '*59fzCw36Dl';
-$dbname = 'u276981324_tugade';
+$username = 'root';
+$password = '';
+$dbname = 'alumni_tracker';
 
 
 $db = new mysqli($servername, $username, $password, $dbname) or die($db->error);
