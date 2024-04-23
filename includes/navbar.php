@@ -1,3 +1,8 @@
+<?php 
+include 'session.php';
+include 'conn.php';
+?>
+
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -33,7 +38,7 @@
             <span class="float-right text-muted text-sm">3 mins</span>
           </a> -->
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="../pages/profile.php" class="dropdown-item">
             <center>
                 <i class="fas fa-user mr-2"></i> Profile
             </center>
@@ -41,7 +46,7 @@
             <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
           </a>
           <div class="dropdown-divider"></div>
-          <a href="logout.php" class="dropdown-item">
+          <a href="../pages/login/logout.php" class="dropdown-item">
             <center>
                  Logout
             </center>
@@ -55,3 +60,16 @@
     </ul>
   </nav>
   <!-- /.navbar -->
+
+  <?php
+if($_SESSION['role'] == "Admin"){
+      echo '
+      ';}
+      
+  elseif($_SESSION['role'] == "Student"){
+    echo '
+    
+';} 
+    else{
+      header("Location:../functions/404.php");
+  } ?>

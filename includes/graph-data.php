@@ -1,5 +1,5 @@
 <?php
-include '../../includes/conn.php';
+include '../includes/conn.php';
 
 $alumni_query = "SELECT alumni_id from tbl_form";
 $user_query_run = mysqli_query($db, $alumni_query);

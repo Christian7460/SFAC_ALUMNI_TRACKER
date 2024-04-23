@@ -1,10 +1,10 @@
 <?php 
 ob_start();
-include "../includes/navbar.php";
-include "../includes/scripts.php";
-include "../includes/conn.php";
-include '../includes/graph-data.php';
-if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" || $_SESSION['role'] == "Registrar")
+include "../../includes/navbar.php";
+include "../../includes/scripts.php";
+include "../../includes/conn.php";
+
+if($_SESSION['role'] = "Admin")
 {
 ?>
 <!DOCTYPE html>
@@ -32,7 +32,6 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
   <title>SFAC Alumni Tracker</title>
-  <style>a { color: inherit; } </style>
 
   
 </head>
@@ -46,9 +45,6 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
 
   <!-- NAVBAR -->
   <!-- SIDEBAR -->
-  <?php 
-include "../includes/sidebar.php";
-?>
 
 
 
@@ -63,8 +59,8 @@ include "../includes/sidebar.php";
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li> -->
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard v1</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -75,317 +71,33 @@ include "../includes/sidebar.php";
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
-    <div class="container-fluid py-4">
-    <!-- Dashboard Header -->
-        <h2 class="mb-1">Analytics</h2>
-        <div class="row">
-            <div class="col-lg-6 mt-4 mt-lg-0 ">
-              <div class="card mb-5">
-                <div class="card-header pb-0 p-3">
-                  <div class="d-flex align-items-center">
-                  <h6 class="mb-0">Analytics Insights (Per Department)</h6>
-
-                  </div>
-                </div>
-        <div class="row">
-        <div class="card-body p-3">
-                <div class="row">
-                  <div class="col-5 text-center">
-                    <div class="chart">
-                      <canvas id="chart-consumption2" class="chart-canvas" height="200"></canvas>
-                    </div>
-                    <h4 class="font-weight-bold mt-n8">
-                      <span><?php echo $alumni_total; ?></span>
-                      <span class="d-block text-body text-sm">ALUMNI</span>
-                    </h4>
-                    </div>
-                <div class="col-7">
-                  <div class="table-responsive">
-                    <table class="table align-items-center mb-0">
-                      <tbody>
-                      <tr>
-                      <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-primary me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">CS Department</h6>
-                  </div>
-                </div>
-                      </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"> <?php echo $total_CS; ?> </span>
-                </td>
-                    </tr>
-                <tr>
-                <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-secondary me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">BA Department</h6>
-                  </div>
-                </div>
-                </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"><?php echo $total_BA; ?></span>
-                </td>
-                </tr>
-                <tr>
-                <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-info me-3"> </span>
-                <div class="d-flex flex-column justify-content-center">
-                  <h6 class="mb-0 text-sm">EDUC Department</h6>
-                </div>
-                </div>
-                </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"> <?php echo $total_EDUC; ?></span>
-                </td>
-                </tr>
-                <tr>
-                <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-success me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">HM / HRM Department</h6>
-                  </div>
-                </div>
-                </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"> <?php echo $total_HM; ?> </span>
-                </td>
-                </tr>
-
-                <tr>
-                      <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-warning me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">LA Department</h6>
-                  </div>
-                </div>
-                      </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"><?php echo $total_LA; ?></span>
-                </td>
-                    </tr>
-                    <tr>
-                      <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-dark me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">ENG Department</h6>
-                  </div>
-                </div>
-                      </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"><?php echo $total_ENG; ?></span>
-                </td>
-                    </tr>
-                    <tr>
-                      <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-danger me-3" > </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">NURS Department</h6>
-                  </div>
-                </div>
-                      </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"><?php echo $total_NURS; ?></span>
-                </td>
-                    </tr>
-              </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-        </div>
-
-        <div class="col-lg-6 mt-4 mt-lg-0 ">
-              <div class="card mb-5">
-                <div class="card-header pb-0  p-3">
-                <div class="d-flex align-items-center">
-                <h6 class="mb-0">Analytics Insights (Work Status)</h6>
-
-              </div>
-            </div>
-        <div class="row">
-        <div class="card-body p-3 ">
-            <div class="row">
-              <div class="col-5 text-center">
-                <div class="chart">
-                  <canvas id="chart-consumption" class="chart-canvas" height="197"></canvas>
-                </div>
-                  <h4 class="font-weight-bold mt-n8">
-                    <span><?php echo $alumni_total; ?></span>
-                  <span class="d-block text-body text-sm">ALUMNI</span>
-                  </h4>
-              </div>
-          <div class="col-7">
-            <div class="table-responsive">
-            <table class="table align-items-center mb-0">
-            <tbody>
-              <tr>
-                <td>
-                  <div class="d-flex px-2 py-0">
-                    <span class="badge bg-gradient-primary me-3"> </span>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Full-time</h6>
-                    </div>
-                  </div>
-                </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-xs"><?php echo $total_ft; ?></span>
-                </td>
-              </tr>
-              <tr>
-              <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-secondary me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">Part-time</h6>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span class="text-xs"><?php echo $total_pt; ?></span>
-              </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex px-2 py-0">
-                    <span class="badge bg-gradient-info me-3"> </span>
-                    <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">Self-employed</h6>
-                    </div>
-                  </div>
-                </td>
-              <td class="align-middle text-center text-sm">
-                <span class="text-xs"> <?php echo $total_se; ?> </span>
-              </td>
-              </tr>
-              <tr>
-              <td>
-                <div class="d-flex px-2 py-0">
-                  <span class="badge bg-gradient-warning me-3"> </span>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">Unemployed</h6>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span class="text-xs"><?php echo $total_ue; ?></span>
-              </td>
-              </tr>
-              <td>
-                <div class="d-flex px-2 py-0">
-
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span class="text-xs"> <?php echo $alumni_total; ?> </span>
-              </td>
-              </tr>
-                  <td>
-                    <div class="d-flex px-2 py-4">
-                      </div>
-                    </div>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                  </td>
-                  </tr>
-
-            </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-        </div>
-        <div class="row">
-    <div class="col-lg-4 col-md-2 mt-2 mb-5 mx-auto">
-        <div class="card z-index-2">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                <div class="bg border-radius-lg py-3 pe-1" style="background: #b5cbff;">
-                    <div class="chart">
-                        <canvas id="chart-bars2" class="chart-canvas" style="display: block; box-sizing: border-box; width: 268.7px;" height="150"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <h6 class="mb-0">Job Alignment Analytics</h6>
-                <p id="percentageDisplay" class="text-sm"></p>
-                <hr class="dark horizontal">
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-2 mt-2 mb-5 mx-auto">
-        <div class="card z-index-2">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                <div class="bg border-radius-lg py-3 pe-1" style="background: #FFFAAB;">
-                    <div class="chart">
-                        <canvas id="chart-bars" class="chart-canvas" style="display: block; box-sizing: border-box; width: 268.7px;" height="150"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <h6 class="mb-0">Satisfactory Ratings</h6>
-                <p id="meanDisplay" class="text-sm"></p>
-                <hr class="dark horizontal">
-            </div>
-        </div>
-    </div>
-</div>
-        
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-info">
               <div class="inner">
-                <?php
-                    $alumni_query = "SELECT alumni_id from tbl_form";
-                        $user_query_run = mysqli_query($db, $alumni_query);
+                <h3>150</h3>
 
-                        if ($user_total = mysqli_num_rows($user_query_run)) {
-                            echo '<h4 class="mb-0">' . $user_total . '</h4>';
-                        } else {
-                            echo '<h4 class="mb-0">0</h4>';
-                        }
-                  ?>
-                  <br>
-
-                <p>Total Alumni</p>
+                <p>New Orders</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">See More <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-success">
               <div class="inner">
                 <h3>53<sup style="font-size: 20px">%</sup></h3>
 
                 <p>Bounce Rate</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-stats-bars"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -394,14 +106,14 @@ include "../includes/sidebar.php";
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-warning">
               <div class="inner">
                 <h3>44</h3>
 
                 <p>User Registrations</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-person-add"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -411,14 +123,14 @@ include "../includes/sidebar.php";
                    <!-- ./col -->
                    <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-warning">
               <div class="inner">
                 <h3>44</h3>
 
                 <p>User Registrations</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-person-add"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -427,31 +139,14 @@ include "../includes/sidebar.php";
                    <!-- ./col -->
                    <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-warning">
               <div class="inner">
                 <h3>44</h3>
 
                 <p>User Registrations</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-
-                   <!-- ./col -->
-                   <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-gradient-danger">
-              <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-person-add"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -461,14 +156,14 @@ include "../includes/sidebar.php";
                    <!-- ./col -->
                    <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-warning">
               <div class="inner">
                 <h3>44</h3>
 
                 <p>User Registrations</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-person-add"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -478,14 +173,31 @@ include "../includes/sidebar.php";
                    <!-- ./col -->
                    <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-warning">
               <div class="inner">
                 <h3>44</h3>
 
                 <p>User Registrations</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+
+                   <!-- ./col -->
+                   <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -494,14 +206,14 @@ include "../includes/sidebar.php";
 
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
                 <h3>65</h3>
 
                 <p>Unique Visitors</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-pie-graph"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>

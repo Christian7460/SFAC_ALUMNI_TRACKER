@@ -1,3 +1,8 @@
+<?php 
+include 'conn.php';
+?>
+
+
 <!-- Main Sidebar Container -->
 <br>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -14,17 +19,25 @@
           <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php { 
+           if($_SESSION['role'] == "Admin"){
+            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
+            while($row = mysqli_fetch_array($user)){
+                $_SESSION['user'] = $row['lastname'];
+                echo $row['firstname']." ". $row['lastname'];
+            }
+        }
+                } ?></a>
         </div>
       </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item">
+            <a href="../pages/admin_home.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -32,7 +45,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a href="#" class="nav-link">
+            <a href="../pages/news/news-display.php" class="nav-link" >
               <i class="nav-icon fas fa-bell"></i>
               <p>
                 News Updates
@@ -198,3 +211,17 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
+
+  <?php
+if($_SESSION['role'] == "Admin"){
+      echo '
+      ';}
+      
+  elseif($_SESSION['role'] == "Student"){
+    echo '
+    
+';} 
+    else{
+      header("Location:../functions/404.php");
+  } ?>
