@@ -16,7 +16,17 @@ include 'conn.php';
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <?php 
+    $getImg = mysqli_query($db, "SELECT img FROM tbl_admin WHERE ad_id = '".$_SESSION['userid']."' ");
+    while ($row = mysqli_fetch_array($getImg)) {
+        if (empty($row['img'])) {
+            echo '<img class="avatar" style="height:35px; width:35px;" src="../../img/image.png" />';
+        } else {
+            echo '<img class="avatar" style="height:35px; width:35px;" src="data:image/jpeg;base64,' . base64_encode($row['img']) . '" />';
+        }
+    }
+?>
+
         </div>
         <div class="info">
           <a href="#" class="d-block"><?php { 
