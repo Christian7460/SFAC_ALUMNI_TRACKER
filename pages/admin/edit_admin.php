@@ -43,12 +43,12 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>General Form</h1>
+            <h1>Profile</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
+              <li class="breadcrumb-item active">Profile</li>
             </ol>
           </div>
         </div>
@@ -61,57 +61,116 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
         <div class="row">
           <!-- left column -->
           <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              
-              <form>
-                <div class="card-body">
-                  <div class="form-group">
-                    
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                  </div>
-                </div>
-                <!-- /.card-body -->
 
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+
+          <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Profile</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3">
+                  <div class="avatar avatar-xl position-relative">
+                  <?php
+                  $getUserData = mysqli_query($db, "SELECT * FROM tbl_admin WHERE ad_id = '$ad_id'");
+                  while ($row = mysqli_fetch_array($getUserData)) {
+                    if (!empty($row['img'])) {
+                      echo '<img src="data:image/jpeg;base64,' . base64_encode($row['img']) . '" alt="bruce"
+                                                class="border-radius-lg shadow-sm" style="height: 180px; width: 180px;">';
+                    } else {
+                      echo '<img src="../../assets/img/image.png" alt="bruce"
+                                            class="border-radius-lg shadow-sm">';
+                    }
+                  }?>
                 </div>
-              </form>
+              
+                  </div>
+                  <div class="col-4">
+                  <div class="col-sm-auto col-8 my-auto">
+                <div class="h-100">
+                  <br>
+                  <h1 class="mb-1 font-weight-bolder"> &nbsp;
+                  <?php { 
+           if($_SESSION['role'] == "Admin"){
+            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
+            while($row = mysqli_fetch_array($user)){
+                $_SESSION['user'] = $row['lastname'];
+                echo $row['firstname']." ". $row['lastname'];
+            }
+        }
+                } ?>
+                  </h1>
+                  <h5> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <?php { 
+           if($_SESSION['role'] == "Admin"){
+            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
+            while($row = mysqli_fetch_array($user)){
+                $_SESSION['user'] = $row['username'];
+                echo $row['username'];
+            }
+        }
+                } ?>
+                  </h5>
+                </div>
+              </div>
+                  </div>
+                  <div class="col-5">
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
             </div>
             <!-- /.card -->
 
+          <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Change Profile Picture</h3>
+              </div>
+              <div class="card-body">
+                
+              <div class="avatar avatar-xl position-relative">
+                </div>
+                <div class="col-sm-auto col-8 my-auto">
+                <div class="h-100">
+                  <h5 class="mb-1 font-weight-bolder">
+                  
+                  </h5>
+                  <p class="mb-0 font-weight-normal text-sm">
+                  </p>
+                </div>
+              </div>
+                <!-- <br>
+                
+                <br>
+                <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+
+
+                <br> -->
+
+                
+                <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit-admin.php" class="form">
+
+                  <div class="file-upload-wrapper" data-text="Upload Image">
+                    <input name="image" type="file" class="file-upload-field" value="">
+                    <button type="submit" class="btn bg-gradient-dark btn-sm float-end" name="saveImg">Update Image</button>
+                  </div>
+                    
+                </form>
+
+
+
+              </div>
+              <!-- /.card-body -->
+            </div>
             <!-- general form elements -->
-            <div class="card card-primary">
+            
+
+            <!-- general form elements -->
+            <!-- <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Different Styles</h3>
               </div>
-              <!-- /.card-header -->
+
               <div class="card-body">
                 <h4>Input</h4>
                 <div class="form-group">
@@ -151,13 +210,11 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     <option>Value 3</option>
                   </select>
                 </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
+            </div> -->
             <!-- /.card -->
 
             <!-- Input addon -->
-            <div class="card card-info">
+            <!-- <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Input Addon</h3>
               </div>
@@ -226,9 +283,9 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                       </div>
                       <input type="text" class="form-control">
                     </div>
-                    <!-- /input-group -->
+                    
                   </div>
-                  <!-- /.col-lg-6 -->
+                  
                   <div class="col-lg-6">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -236,11 +293,11 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                       </div>
                       <input type="text" class="form-control">
                     </div>
-                    <!-- /input-group -->
+                    
                   </div>
-                  <!-- /.col-lg-6 -->
+                  
                 </div>
-                <!-- /.row -->
+                
 
                 <h5 class="mt-4 mb-2">With buttons</h5>
 
@@ -259,20 +316,20 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                       <li class="dropdown-item"><a href="#">Separated link</a></li>
                     </ul>
                   </div>
-                  <!-- /btn-group -->
+                  
                   <input type="text" class="form-control">
                 </div>
-                <!-- /input-group -->
+                
 
                 <p>Normal</p>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <button type="button" class="btn btn-danger">Action</button>
                   </div>
-                  <!-- /btn-group -->
+                  
                   <input type="text" class="form-control">
                 </div>
-                <!-- /input-group -->
+                
 
                 <p>Small <code>.input-group.input-group-sm</code></p>
                 <div class="input-group input-group-sm">
@@ -281,18 +338,18 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     <button type="button" class="btn btn-info btn-flat">Go!</button>
                   </span>
                 </div>
-                <!-- /input-group -->
+                
               </div>
-              <!-- /.card-body -->
-            </div>
+              
+            </div> -->
             <!-- /.card -->
             <!-- Horizontal Form -->
-            <div class="card card-info">
+
+            <!-- <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Horizontal Form</h3>
               </div>
-              <!-- /.card-header -->
-              <!-- form start -->
+
               <form class="form-horizontal">
                 <div class="card-body">
                   <div class="form-group row">
@@ -316,14 +373,14 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     </div>
                   </div>
                 </div>
-                <!-- /.card-body -->
+
                 <div class="card-footer">
                   <button type="submit" class="btn btn-info">Sign in</button>
                   <button type="submit" class="btn btn-default float-right">Cancel</button>
                 </div>
-                <!-- /.card-footer -->
+
               </form>
-            </div>
+            </div> -->
             <!-- /.card -->
 
           </div>
@@ -331,53 +388,99 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
           <!-- right column -->
           <div class="col-md-6">
             <!-- Form Element sizes -->
-            <div class="card card-success">
+
+
+
+            <div class="card card-danger"> 
+              <!-- card card-primary -->
               <div class="card-header">
-                <h3 class="card-title">Different Height</h3>
+                <h3 class="card-title">Basic Information</h3>
               </div>
-              <div class="card-body">
-                <input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
-                <br>
-                <input class="form-control" type="text" placeholder="Default input">
-                <br>
-                <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
-              </div>
-              <!-- /.card-body -->
+              <!-- /.card-header -->
+              <!-- form start -->
+              
+              <form>
+                <div class="card-body">
+                  <div class="form-group">
+                    
+                    <label for="exampleInputEmail1">First Name</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Last Name</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Email</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Username</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                  </div>
+                  
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-danger float-right">Update Basic Information</button>
+                </div>
+              </form>
             </div>
             <!-- /.card -->
 
-            <div class="card card-danger">
+
+            <div class="card card-danger"> 
+              <!-- card card-primary -->
               <div class="card-header">
-                <h3 class="card-title">Different Width</h3>
+                <h3 class="card-title">Change Password</h3>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-3">
-                    <input type="text" class="form-control" placeholder=".col-3">
+              <!-- /.card-header -->
+              <!-- form start -->
+              
+              <form>
+                <div class="card-body">
+                  <div class="form-group">
+                    
+                    <label for="exampleInputEmail1">New Passowrd</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                   </div>
-                  <div class="col-4">
-                    <input type="text" class="form-control" placeholder=".col-4">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                   </div>
-                  <div class="col-5">
-                    <input type="text" class="form-control" placeholder=".col-5">
+                  <div class="form-group">
                   </div>
+                  
                 </div>
-              </div>
-              <!-- /.card-body -->
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-danger float-right">Update Password</button>
+                </div>
+              </form>
             </div>
+
+
+
+
             <!-- /.card -->
+
+            
 
             <!-- general form elements disabled -->
-            <div class="card card-warning">
+            <!-- <div class="card card-warning">
               <div class="card-header">
                 <h3 class="card-title">General Elements</h3>
               </div>
-              <!-- /.card-header -->
+              
               <div class="card-body">
                 <form>
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- text input -->
+                      
                       <div class="form-group">
                         <label>Text</label>
                         <input type="text" class="form-control" placeholder="Enter ...">
@@ -392,7 +495,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                   </div>
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- textarea -->
+                      
                       <div class="form-group">
                         <label>Textarea</label>
                         <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
@@ -406,7 +509,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     </div>
                   </div>
 
-                  <!-- input states -->
+                  
                   <div class="form-group">
                     <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
                       success</label>
@@ -425,7 +528,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- checkbox -->
+                      
                       <div class="form-group">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox">
@@ -442,7 +545,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <!-- radio -->
+                      
                       <div class="form-group">
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="radio1">
@@ -462,7 +565,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- select -->
+                      
                       <div class="form-group">
                         <label>Select</label>
                         <select class="form-control">
@@ -490,7 +593,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- Select multiple-->
+                      
                       <div class="form-group">
                         <label>Select Multiple</label>
                         <select multiple class="form-control">
@@ -517,20 +620,20 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                   </div>
                 </form>
               </div>
-              <!-- /.card-body -->
-            </div>
+              
+            </div> -->
             <!-- /.card -->
             <!-- general form elements disabled -->
-            <div class="card card-secondary">
+            <!-- <div class="card card-secondary">
               <div class="card-header">
                 <h3 class="card-title">Custom Elements</h3>
               </div>
-              <!-- /.card-header -->
+              
               <div class="card-body">
                 <form>
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- checkbox -->
+                      
                       <div class="form-group">
                         <div class="custom-control custom-checkbox">
                           <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
@@ -555,7 +658,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <!-- radio -->
+                      
                       <div class="form-group">
                         <div class="custom-control custom-radio">
                           <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
@@ -583,7 +686,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- select -->
+                      
                       <div class="form-group">
                         <label>Custom Select</label>
                         <select class="custom-select">
@@ -611,7 +714,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- Select multiple-->
+                      
                       <div class="form-group">
                         <label>Custom Select Multiple</label>
                         <select multiple class="custom-select">
@@ -635,9 +738,9 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <div class="custom-control custom-switch">
                       <input type="checkbox" class="custom-control-input" id="customSwitch1">
                       <label class="custom-control-label" for="customSwitch1">Toggle this custom switch element</label>
@@ -667,18 +770,18 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     <label for="customRange3">Custom range (custom-range-teal)</label>
                     <input type="range" class="custom-range custom-range-teal" id="customRange3">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group"> -->
                     <!-- <label for="customFile">Custom File</label> -->
 
-                    <div class="custom-file">
+                    <!-- <div class="custom-file">
                       <input type="file" class="custom-file-input" id="customFile">
                       <label class="custom-file-label" for="customFile">Choose file</label>
-                    </div>
-                  </div>
+                    </div> -->
+                  <!-- </div>
                   <div class="form-group">
                   </div>
                 </form>
-              </div>
+              </div> -->
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -687,12 +790,12 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-<?php
+    </section><?php
 include '../../includes/footer.php';
 ?>
+    <!-- /.content -->
+  </div>
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -710,8 +813,6 @@ include '../../includes/footer.php';
 <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
 $(function () {

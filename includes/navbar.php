@@ -38,7 +38,7 @@ include 'conn.php';
             <span class="float-right text-muted text-sm">3 mins</span>
           </a> -->
           <div class="dropdown-divider"></div>
-          <a href="../pages/profile.php" class="dropdown-item">
+          <a href="../pages/admin/edit_admin.php" class="dropdown-item">
             <center>
                 <i class="fas fa-user mr-2"></i> Profile
             </center>
