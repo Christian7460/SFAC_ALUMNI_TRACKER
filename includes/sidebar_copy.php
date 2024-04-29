@@ -1,3 +1,12 @@
+<?php 
+      include 'conn.php';
+      ?>
+
+<?php
+if($_SESSION['role'] = "Admin"){
+      echo '
+
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -672,3 +681,10 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
+  ';}
+
+
+  else{
+    header("Location:../functions/404.php");
+} ?>

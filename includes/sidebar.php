@@ -1,6 +1,9 @@
 <?php 
 include 'conn.php';
+
 ?>
+
+
 
 
 <!-- Main Sidebar Container -->
@@ -29,7 +32,7 @@ include 'conn.php';
 
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php { 
+          <a href="./pages/edit_admin.php" class="d-block"><?php { 
            if($_SESSION['role'] == "Admin"){
             $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
             while($row = mysqli_fetch_array($user)){
@@ -42,20 +45,29 @@ include 'conn.php';
       </div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
+     
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" >
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="../pages/admin_home.php" class="nav-link">
+            <a href="pages/admin_home.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="pages/admin_home.php" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          
           <li class="nav-item ">
-            <a href="../pages/news/news-display.php" class="nav-link" >
+            <a href=" pages/news/news-display.php" class="nav-link" >
               <i class="nav-icon fas fa-bell"></i>
               <p>
                 News Updates
@@ -105,7 +117,7 @@ include 'conn.php';
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../pages/add_account/add_registrar.php" class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
                   <p>Add Registrar</p>
                 </a>
@@ -170,6 +182,7 @@ include 'conn.php';
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="pages/charts/chartjs.html" class="nav-link">

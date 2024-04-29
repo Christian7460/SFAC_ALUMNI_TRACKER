@@ -1,8 +1,8 @@
 <?php 
 ob_start();
+include "../includes/conn.php";
 include "../includes/navbar.php";
 include "../includes/scripts.php";
-include "../includes/conn.php";
 include '../includes/graph-data.php';
 if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" || $_SESSION['role'] == "Registrar")
 {
