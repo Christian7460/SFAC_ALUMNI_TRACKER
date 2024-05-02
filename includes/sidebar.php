@@ -3,8 +3,14 @@ include 'conn.php';
 
 ?>
 
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 
 <!-- Main Sidebar Container -->
 <br>
@@ -50,7 +56,7 @@ include 'conn.php';
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="pages/admin_home.php" class="nav-link">
+            <a href="../pages/admin_home.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -58,10 +64,10 @@ include 'conn.php';
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/admin_home.php" class="nav-link">
+            <a href="../pages/admin/add_admin.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                Add Admin
               </p>
             </a>
           </li>
@@ -248,3 +254,6 @@ if($_SESSION['role'] == "Admin"){
     else{
       header("Location:../functions/404.php");
   } ?>
+  
+</body>
+</html>

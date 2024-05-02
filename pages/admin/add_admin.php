@@ -1,5 +1,9 @@
 <?php
-include '../../includes/conn.php';
+require '../../includes/conn.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +25,7 @@ include '../../includes/conn.php';
   
 <?php 
 include '../../includes/navbar.php';
-include '../../includes/sidebar.php';
+require "../../includes/sidebar.php";
 ?>
  
 
@@ -134,10 +138,7 @@ include '../../includes/sidebar.php';
 
             <?php 
                   if (isset($_POST['submit'])) {
-                    // $check = getimagesize($_FILES["image"]["tmp_name"]);
-                    // if($check !== false){
-                    //     $image = $_FILES['image']['tmp_name'];
-                    //     $imgContent = addslashes(file_get_contents($image));
+
                         $firstname = mysqli_real_escape_string($db,$_POST['firstname']);
                         $middlename = mysqli_real_escape_string($db,$_POST['middlename']);
                         $lastname = mysqli_real_escape_string($db,$_POST['lastname']);
@@ -150,7 +151,7 @@ include '../../includes/sidebar.php';
                     
                     
                         if($password != $confirm_password){
-                          echo "<script>alert('Password do not match!'); window.location='add_home.php'</script>";
+                          echo "<script>alert('Password do not match!'); window.location='add_admin.php'</script>";
 
                         }else{
                           mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
@@ -191,10 +192,6 @@ include '../../includes/footer.php';
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- Page specific script -->
-<script>
-$(function () {
-  bsCustomFileInput.init();
-});
-</script>
+
 </body>
 </html>

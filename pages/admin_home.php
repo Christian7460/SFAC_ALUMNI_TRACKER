@@ -47,7 +47,7 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
   <!-- NAVBAR -->
   <!-- SIDEBAR -->
   <?php 
-include "../includes/sidebar.php";
+require "../includes/sidebar.php";
 ?>
 
 
