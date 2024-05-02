@@ -26,10 +26,6 @@ include '../../includes/conn.php';
 <?php 
 include '../../includes/navbar.php';
 require "../../includes/sidebar.php";
-$ad_id = $_SESSION['ad_id'];
-$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($db));
-                    $row=mysqli_fetch_array($query);
-                    echo $ad_id;
 ?>
  
 
@@ -40,7 +36,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Admin</h1>
+            <h1>Add Registrar</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -67,13 +63,6 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-
-
-              <?php
-                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
-                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
-                      $row=mysqli_fetch_array($query);
-                    ?>
               
               <form method="POST">
                 <div class="card-body">
@@ -158,19 +147,19 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     $password = mysqli_real_escape_string($db, $_POST['password']);
                     $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
                     
-                    $result=mysqli_query($db,"SELECT * from tbl_admin WHERE firstname='$firstname' ") or die (mysqli_error($db));
+                    $result=mysqli_query($db,"SELECT * from tbl_registrar WHERE firstname='$firstname' ") or die (mysqli_error($db));
                     $row=mysqli_num_rows($result);
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
                     $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
                     if ($row > 0)
                     {
-                    echo "<script>alert('Admin already active!'); window.location='add_admin.php'</script>";
+                    echo "<script>alert('registrar already active!'); window.location='add_registrar.php'</script>";
                     }
                     else
                     {       
-                        mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
-                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($con));
-                        echo "<script>alert('Admin successfully added!'); window.location='add_admin.php'</script>";
+                        mysqli_query($db,"INSERT into tbl_registrar (firstname, middlename, lastname, email, username, password, confirm_password)
+                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($db));
+                        echo "<script>alert('registrar successfully added!'); window.location='add_registrar.php'</script>";
                     }
                   }
                   ?>

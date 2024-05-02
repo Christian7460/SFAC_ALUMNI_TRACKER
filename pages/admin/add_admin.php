@@ -26,10 +26,6 @@ include '../../includes/conn.php';
 <?php 
 include '../../includes/navbar.php';
 require "../../includes/sidebar.php";
-$ad_id = $_SESSION['ad_id'];
-$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($db));
-                    $row=mysqli_fetch_array($query);
-                    echo $ad_id;
 ?>
  
 
@@ -67,13 +63,6 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-
-
-              <?php
-                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
-                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
-                      $row=mysqli_fetch_array($query);
-                    ?>
               
               <form method="POST">
                 <div class="card-body">
@@ -169,7 +158,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                     else
                     {       
                         mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
-                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($con));
+                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($db));
                         echo "<script>alert('Admin successfully added!'); window.location='add_admin.php'</script>";
                     }
                   }

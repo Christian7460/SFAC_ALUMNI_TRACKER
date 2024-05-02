@@ -2,7 +2,10 @@
 ob_start();
 include '../../includes/conn.php';
 
-
+$query9 = "SELECT * FROM tbl_batch";
+$result9 = $db->query($query9);
+if ($result9->num_rows > 0) {
+  $batch = mysqli_fetch_all($result9, MYSQLI_ASSOC);}
 
 ?>
 
@@ -11,7 +14,7 @@ include '../../includes/conn.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | General Form Elements</title>
+  <title>SFAC Alumni Tracker</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -26,10 +29,6 @@ include '../../includes/conn.php';
 <?php 
 include '../../includes/navbar.php';
 require "../../includes/sidebar.php";
-$ad_id = $_SESSION['ad_id'];
-$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($db));
-                    $row=mysqli_fetch_array($query);
-                    echo $ad_id;
 ?>
  
 
@@ -40,12 +39,12 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Admin</h1>
+            <h1>Add Student</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../pages/admin_home.php">Home</a></li>
-              <li class="breadcrumb-item active">Add Admin</li>
+              <li class="breadcrumb-item active">Add Student</li>
             </ol>
           </div>
         </div>
@@ -67,18 +66,14 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-
-
-              <?php
-                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
-                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
-                      $row=mysqli_fetch_array($query);
-                    ?>
               
               <form method="POST">
                 <div class="card-body">
+                <div class="form-group">
+                    <label for="stud_no">Student Number</label>
+                    <input type="text" name="stud_no" class="form-control" id="stud_no" placeholder="Student Number" required>
+                  </div>
                   <div class="form-group">
-                    
                     <label for="firstname">First Name</label>
                     <input type="text" name="firstname" class="form-control" id="firstname" placeholder="First Name" required>
                   </div>
@@ -93,7 +88,22 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
-                  </div>
+                  </div>               
+                  <div class="form-group">
+                        <label>Batch List</label>
+                        <select name="batch_id" class="form-control">   
+                        <option selected disabled>Batch List</option>                                         
+                                    <?php
+                                    foreach ($batch as $Batch) {
+                                    ?>
+                                        <option value="<?php echo $Batch['batch_id'] ?>">
+                                            <?php echo $Batch['batch'] ?>
+                                        </option>
+                                    <?php
+                                    }
+                                    ?>
+                        </select>
+                    </div>
                   <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
@@ -150,27 +160,29 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
 
             <?php 
                   if (isset($_POST['update'])) {
+                    $stud_no = mysqli_real_escape_string($db,$_POST['stud_no']);
                     $firstname = mysqli_real_escape_string($db,$_POST['firstname']);
                     $middlename = mysqli_real_escape_string($db,$_POST['middlename']);
                     $lastname = mysqli_real_escape_string($db,$_POST['lastname']);
                     $email = mysqli_real_escape_string($db,$_POST['email']);
+                    $batch_id = mysqli_real_escape_string($db,$_POST['batch_id']);
                     $username =mysqli_real_escape_string($db,$_POST['username']);
                     $password = mysqli_real_escape_string($db, $_POST['password']);
                     $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
                     
-                    $result=mysqli_query($db,"SELECT * from tbl_admin WHERE firstname='$firstname' ") or die (mysqli_error($db));
+                    $result=mysqli_query($db,"SELECT * from tbl_student WHERE stud_no='$stud_no' ") or die (mysqli_error($db));
                     $row=mysqli_num_rows($result);
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
                     $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
                     if ($row > 0)
                     {
-                    echo "<script>alert('Admin already active!'); window.location='add_admin.php'</script>";
+                    echo "<script>alert('student already active!'); window.location='add_student.php'</script>";
                     }
                     else
                     {       
-                        mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
-                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($con));
-                        echo "<script>alert('Admin successfully added!'); window.location='add_admin.php'</script>";
+                        mysqli_query($db,"INSERT into tbl_student (stud_no,firstname, middlename, lastname, email, batch_id, username, password, confirm_password)
+                        values ('$stud_no', '$firstname', '$middlename', '$lastname', '$email', '$batch_id','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($db));
+                        echo "<script>alert('student successfully added!'); window.location='add_student.php'</script>";
                     }
                   }
                   ?>

@@ -135,7 +135,7 @@ include 'conn.php';
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../pages/add_account/add_alumni.php" class="nav-link">
+                <a href="../pages/add_account/add_student.php" class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
                   <p>Add Student</p>
                 </a>
