@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include '../../includes/conn.php';
 
 
@@ -10,7 +11,7 @@ include '../../includes/conn.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | General Form Elements</title>
+  <title>SFAC Alumni Tracker</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,7 +25,11 @@ include '../../includes/conn.php';
   
 <?php 
 include '../../includes/navbar.php';
-include '../../includes/sidebar.php';
+require "../../includes/sidebar.php";
+$ad_id = $_SESSION['ad_id'];
+$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($db));
+                    $row=mysqli_fetch_array($query);
+                    echo $ad_id;
 ?>
  
 
@@ -35,7 +40,7 @@ include '../../includes/sidebar.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Registrar</h1>
+            <h1>Add Admin</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -62,36 +67,46 @@ include '../../includes/sidebar.php';
               </div>
               <!-- /.card-header -->
               <!-- form start -->
+
+
+              <?php
+                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
+                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
+                      $row=mysqli_fetch_array($query);
+                    ?>
               
-              <form>
+              <form method="POST">
                 <div class="card-body">
                   <div class="form-group">
                     
-                    <label for="exampleInputEmail1">First Name</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First Name">
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="firstname" class="form-control" id="firstname" placeholder="First Name" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Middle Name</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Middle Name">
+                    <label for="middlename">Middle Name</label>
+                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder="Middle Name">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Last Name</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Last Name">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Last Name" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Email</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
                   </div>
-
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
+                  </div>
                   
                 </div>
                 <!-- /.card-body -->
 
+                <div class="card-footer">
+                </div>
 
-              </form>
             </div>
             <!-- /.card -->
-
 
           </div>
           <!--/.col (left) -->
@@ -103,39 +118,63 @@ include '../../includes/sidebar.php';
             <div class="card card-success"> 
               <!-- card card-primary -->
               <div class="card-header">
-                <h3 class="card-title">Account</h3>
+                <h3 class="card-title">Password</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               
-              <form>
                 <div class="card-body">
-                <div class="form-group">
-                    
-                    <label for="exampleInputEmail1">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Username">
-                  </div>
                   <div class="form-group">
                     
-                    <label for="exampleInputEmail1">Password</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Password">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Confirm Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
                   </div>
                   <div class="form-group">
-                  <button type="submit" class="btn btn-success float-right">Submit</button>
                   </div>
                   
                 </div>
                 <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" name="update" class="btn btn-danger float-right">Submit</button>
+                </div>
               </form>
             </div>
             <!-- /.card -->
 
-        
-              <!-- /.card-body -->
+
+
+            <?php 
+                  if (isset($_POST['update'])) {
+                    $firstname = mysqli_real_escape_string($db,$_POST['firstname']);
+                    $middlename = mysqli_real_escape_string($db,$_POST['middlename']);
+                    $lastname = mysqli_real_escape_string($db,$_POST['lastname']);
+                    $email = mysqli_real_escape_string($db,$_POST['email']);
+                    $username =mysqli_real_escape_string($db,$_POST['username']);
+                    $password = mysqli_real_escape_string($db, $_POST['password']);
+                    $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
+                    
+                    $result=mysqli_query($db,"SELECT * from tbl_admin WHERE firstname='$firstname' ") or die (mysqli_error($db));
+                    $row=mysqli_num_rows($result);
+                    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+                    $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
+                    if ($row > 0)
+                    {
+                    echo "<script>alert('Admin already active!'); window.location='add_admin.php'</script>";
+                    }
+                    else
+                    {       
+                        mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
+                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($con));
+                        echo "<script>alert('Admin successfully added!'); window.location='add_admin.php'</script>";
+                    }
+                  }
+                  ?>
+
             </div>
             <!-- /.card -->
           </div>
@@ -167,10 +206,6 @@ include '../../includes/footer.php';
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- Page specific script -->
-<script>
-$(function () {
-  bsCustomFileInput.init();
-});
-</script>
+
 </body>
 </html>
