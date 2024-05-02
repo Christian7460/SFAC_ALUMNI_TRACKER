@@ -2,10 +2,14 @@
 ob_start();
 include '../../includes/conn.php';
 
+if($_SESSION['role'] = "Admin")
+{
+
 $query9 = "SELECT * FROM tbl_batch";
 $result9 = $db->query($query9);
 if ($result9->num_rows > 0) {
   $batch = mysqli_fetch_all($result9, MYSQLI_ASSOC);}
+
 
 ?>
 
@@ -221,3 +225,6 @@ include '../../includes/footer.php';
 
 </body>
 </html>
+<?php }else{
+  header("Location: ../404.php");
+} ?>

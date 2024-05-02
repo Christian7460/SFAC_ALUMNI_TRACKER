@@ -2,7 +2,8 @@
 ob_start();
 include '../../includes/conn.php';
 
-
+if($_SESSION['role'] = "Admin")
+{
 
 ?>
 
@@ -198,3 +199,6 @@ include '../../includes/footer.php';
 
 </body>
 </html>
+<?php }else{
+  header("Location: ../404.php");
+} ?>
