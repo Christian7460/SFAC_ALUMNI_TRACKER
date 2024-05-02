@@ -198,7 +198,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                   </div>
                   <div class="form-group">
                     <label for="middlename">Middle Name</label>
-                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder="Middle Name">
+                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder="<?php echo $row['middlename']; ?>">
                   </div>
                   <div class="form-group">
                     <label for="lastname">Last Name</label>
@@ -258,50 +258,64 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
             </div>
 
             <?php 
-                             
-                    if (isset($_POST['information'])) {
-                    $firstname = mysqli_real_escape_string($db, $_POST['firstname']);
-                    $middlename = mysqli_real_escape_string($db, $_POST['middlename']);
-                    $lastname = mysqli_real_escape_string($db, $_POST['lastname']);
-                    $email = mysqli_real_escape_string($db, $_POST['email']);
-                    $username = mysqli_real_escape_string($db, $_POST['username']);
+    if (isset($_POST['information'])) {
+        $firstname = mysqli_real_escape_string($db, $_POST['firstname']);
+        $middlename = mysqli_real_escape_string($db, $_POST['middlename']);
+        $lastname = mysqli_real_escape_string($db, $_POST['lastname']);
+        $email = mysqli_real_escape_string($db, $_POST['email']);
+        $username = mysqli_real_escape_string($db, $_POST['username']);
 
-                        mysqli_query($db, "UPDATE tbl_admin 
-                            SET firstname='$firstname', middlename='$middlename', 
-                            lastname='$lastname', email='$email', username='$username' 
-                            WHERE ad_id = '$ad_id' ")or die(mysqli_error($db));                 
-
-                        echo "<script>alert('Successfully Updated Admin Info!'); window.location='edit_admin.php'</script>";
-                    }
+        // Check if at least one of the fields has a value
+        if (!empty($firstname) || !empty($middlename) || !empty($lastname) || !empty($email) || !empty($username)) {
+            // Build the SQL query based on the provided fields
+            $sql = "UPDATE tbl_admin SET";
+            if (!empty($firstname)) $sql .= " firstname='$firstname',";
+            if (!empty($middlename)) $sql .= " middlename='$middlename',";
+            if (!empty($lastname)) $sql .= " lastname='$lastname',";
+            if (!empty($email)) $sql .= " email='$email',";
+            if (!empty($username)) $sql .= " username='$username',";
+            // Remove the trailing comma
+            $sql = rtrim($sql, ',');
+            // Add the condition for the WHERE clause
+            $sql .= " WHERE ad_id = '$ad_id'";
             
-                ?>
+            // Execute the SQL query
+            mysqli_query($db, $sql) or die(mysqli_error($db));
+
+            echo "<script>alert('Successfully Updated Admin Info!'); window.location='edit_admin.php'</script>";
+        } else {
+            // Inform the user that at least one field should have a value
+            echo "<script>alert('At least one field should have a value.'); window.location='edit_admin.php'</script>";
+        }
+    }
+?>
 
 
 
-                    <?php 
-                             
-                             if (isset($_POST['update'])) {
-                             $password = mysqli_real_escape_string($db, $_POST['password']);
-                             $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
-                             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-                             $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
-         
-                             if ($password != $confirm_password) {
-                                 if ($_SESSION['role'] == 'Admin') {
-                                     echo "<script>alert('Password do not match!'); window.location='edit_admin.php'</script>";
-                                 } else {
-                                     echo "<script>alert('Password do not match!'); window.location='edit_admin.php'</script>";
-                                 }
-                             } else {
-                                 // Update the database with the new values
-                                 mysqli_query($db, "UPDATE tbl_admin 
+
+<?php 
+    if (isset($_POST['update'])) {
+        $password = mysqli_real_escape_string($db, $_POST['password']);
+        $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
+        
+        // Check if both password fields are not empty and they match
+        if (!empty($password) && !empty($confirm_password) && $password === $confirm_password) {
+            $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+            $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
+
+            // Update the database with the new password
+            mysqli_query($db, "UPDATE tbl_admin 
                                 SET password='$hashedPwd',confirm_password='$confirm_hashedPwd' 
-                                WHERE ad_id = '$ad_id' ")or die(mysqli_error($db));                 
-         
-                                 echo "<script>alert('Successfully Updated Admin Info!'); window.location='edit_admin.php'</script>";
-                             }
-                         }
-                         ?>
+                                WHERE ad_id = '$ad_id' ")or die(mysqli_error($db));
+
+            echo "<script>alert('Successfully Updated Admin Info!'); window.location='edit_admin.php'</script>";
+        } else {
+            // Inform the user that passwords do not match or one of the fields is empty
+            echo "<script>alert('Passwords do not match or one of the fields is empty.'); window.location='edit_admin.php'</script>";
+        }
+    }
+?>
+
 
 
 
