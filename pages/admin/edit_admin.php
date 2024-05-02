@@ -5,7 +5,6 @@ include '../../includes/conn.php';
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +26,7 @@ include '../../includes/conn.php';
 include "../../includes/navbar.php";
 include "../../includes/sidebar.php";
 $ad_id = $_SESSION['ad_id'];
-$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($con));
+$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($db));
                     $row=mysqli_fetch_array($query);
                     echo $ad_id;
 
@@ -183,25 +182,35 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
               </div>
               <!-- /.card-header -->
               <!-- form start -->
+
+              <?php
+                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
+                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
+                      $row=mysqli_fetch_array($query);
+                    ?>
               
-              <form>
+              <form method="POST">
                 <div class="card-body">
                   <div class="form-group">
                     
-                    <label for="exampleInputEmail1">First Name</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="firstname" class="form-control" id="firstname" placeholder="<?php echo $row['firstname']; ?>">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Last Name</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="middlename">Middle Name</label>
+                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder="Middle Name">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Email</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastname" class="form-control" id="lastname" placeholder="<?php echo $row['lastname']; ?>">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Username</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="<?php echo $row['email']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" class="form-control" id="username" placeholder="<?php echo $row['username']; ?>">
                   </div>
                   <div class="form-group">
                   </div>
@@ -210,7 +219,7 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-danger float-right">Update Basic Information</button>
+                  <button type="submit" name="information" class="btn btn-danger float-right">Update Basic Information</button>
                 </div>
               </form>
             </div>
@@ -225,16 +234,16 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
               <!-- /.card-header -->
               <!-- form start -->
               
-              <form>
+              <form method="POST">
                 <div class="card-body">
                   <div class="form-group">
                     
-                    <label for="exampleInputEmail1">New Passowrd</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <label for="password">New Passowrd</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="New Password">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Confirm Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password">
                   </div>
                   <div class="form-group">
                   </div>
@@ -243,10 +252,56 @@ $query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(my
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-danger float-right">Update Password</button>
+                  <button type="submit" name="update" class="btn btn-danger float-right">Update Password</button>
                 </div>
               </form>
             </div>
+
+            <?php 
+                             
+                    if (isset($_POST['information'])) {
+                    $firstname = mysqli_real_escape_string($db, $_POST['firstname']);
+                    $middlename = mysqli_real_escape_string($db, $_POST['middlename']);
+                    $lastname = mysqli_real_escape_string($db, $_POST['lastname']);
+                    $email = mysqli_real_escape_string($db, $_POST['email']);
+                    $username = mysqli_real_escape_string($db, $_POST['username']);
+
+                        mysqli_query($db, "UPDATE tbl_admin 
+                            SET firstname='$firstname', middlename='$middlename', 
+                            lastname='$lastname', email='$email', username='$username' 
+                            WHERE ad_id = '$ad_id' ")or die(mysqli_error($db));                 
+
+                        echo "<script>alert('Successfully Updated Admin Info!'); window.location='edit_admin.php'</script>";
+                    }
+            
+                ?>
+
+
+
+                    <?php 
+                             
+                             if (isset($_POST['update'])) {
+                             $password = mysqli_real_escape_string($db, $_POST['password']);
+                             $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
+                             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+                             $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
+         
+                             if ($password != $confirm_password) {
+                                 if ($_SESSION['role'] == 'Admin') {
+                                     echo "<script>alert('Password do not match!'); window.location='edit_admin.php'</script>";
+                                 } else {
+                                     echo "<script>alert('Password do not match!'); window.location='edit_admin.php'</script>";
+                                 }
+                             } else {
+                                 // Update the database with the new values
+                                 mysqli_query($db, "UPDATE tbl_admin 
+                                SET password='$hashedPwd',confirm_password='$confirm_hashedPwd' 
+                                WHERE ad_id = '$ad_id' ")or die(mysqli_error($db));                 
+         
+                                 echo "<script>alert('Successfully Updated Admin Info!'); window.location='edit_admin.php'</script>";
+                             }
+                         }
+                         ?>
 
 
 

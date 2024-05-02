@@ -1,8 +1,8 @@
 <?php
-require '../../includes/conn.php';
+ob_start();
+include '../../includes/conn.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 ?>
 
@@ -26,6 +26,10 @@ ini_set('display_errors', 1);
 <?php 
 include '../../includes/navbar.php';
 require "../../includes/sidebar.php";
+$ad_id = $_SESSION['ad_id'];
+$query=mysqli_query($db,"select * from tbl_admin where ad_id='$ad_id'")or die(mysqli_error($db));
+                    $row=mysqli_fetch_array($query);
+                    echo $ad_id;
 ?>
  
 
@@ -63,33 +67,44 @@ require "../../includes/sidebar.php";
               </div>
               <!-- /.card-header -->
               <!-- form start -->
+
+
+              <?php
+                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
+                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
+                      $row=mysqli_fetch_array($query);
+                    ?>
               
               <form method="POST">
                 <div class="card-body">
                   <div class="form-group">
                     
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" name="firstname" required="required" id="firstname" placeholder="First Name">
+                    <input type="text" name="firstname" class="form-control" id="firstname" placeholder="First Name">
                   </div>
                   <div class="form-group">
                     <label for="middlename">Middle Name</label>
-                    <input type="text" class="form-control" name="middlename" id="middlename" placeholder="Middle Name">
+                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder="Middle Name">
                   </div>
                   <div class="form-group">
                     <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control" name="lastname" required="required" id="lastname" placeholder="Last Name">
+                    <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Last Name">
                   </div>
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" autocomplete="off" name="email" id="email" placeholder="e.g. sample@email.com" class="form-control">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email">
                   </div>
-
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+                  </div>
                   
                 </div>
                 <!-- /.card-body -->
 
+                <div class="card-footer">
+                </div>
 
-              </form>
             </div>
             <!-- /.card -->
 
@@ -103,61 +118,60 @@ require "../../includes/sidebar.php";
             <div class="card card-success"> 
               <!-- card card-primary -->
               <div class="card-header">
-                <h3 class="card-title">Account</h3>
+                <h3 class="card-title">Password</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               
-              <form>
                 <div class="card-body">
-                <div class="form-group">
-                    
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required="required">
-
-                  </div>
                   <div class="form-group">
                     
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required="required">
-
+                    <input type="password" name="password" class="form-control" id="password" placeholder="New Password">
                   </div>
                   <div class="form-group">
-                    <label for="confirm_pass">Confirm Password</label>
-                    <input type="password" class="form-control" name="confirm_pass" id="confirm_pass" placeholder="Confirm Password" required="required">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password">
                   </div>
                   <div class="form-group">
-                  <button type="submit" name="submit" class="btn btn-success float-right">Submit</button>
                   </div>
                   
                 </div>
                 <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" name="update" class="btn btn-danger float-right">Submit</button>
+                </div>
               </form>
             </div>
             <!-- /.card -->
 
+
+
             <?php 
-                  if (isset($_POST['submit'])) {
-
-                        $firstname = mysqli_real_escape_string($db,$_POST['firstname']);
-                        $middlename = mysqli_real_escape_string($db,$_POST['middlename']);
-                        $lastname = mysqli_real_escape_string($db,$_POST['lastname']);
-                        $email = mysqli_real_escape_string($db,$_POST['email']);
-                        $username =mysqli_real_escape_string($db,$_POST['username']);
-                        $password = mysqli_real_escape_string($db,$_POST['password']);
-                        $confirm_password = mysqli_real_escape_string($db,$_POST['confirm_password']);                        
-                        $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-                        $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
+                  if (isset($_POST['update'])) {
+                    $firstname = mysqli_real_escape_string($db,$_POST['firstname']);
+                    $middlename = mysqli_real_escape_string($db,$_POST['middlename']);
+                    $lastname = mysqli_real_escape_string($db,$_POST['lastname']);
+                    $email = mysqli_real_escape_string($db,$_POST['email']);
+                    $username =mysqli_real_escape_string($db,$_POST['username']);
+                    $password = mysqli_real_escape_string($db, $_POST['password']);
+                    $confirm_password = mysqli_real_escape_string($db, $_POST['confirm_password']);
                     
-                    
-                        if($password != $confirm_password){
-                          echo "<script>alert('Password do not match!'); window.location='add_admin.php'</script>";
-
-                        }else{
-                          mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
-                          values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd' )")or die(mysqli_error($db));
-                          echo "<script>alert('Admin successfully added!'); window.location='add_admin.php'</script>";
-                      }
+                    $result=mysqli_query($db,"SELECT * from tbl_admin WHERE firstname='$firstname' ") or die (mysqli_error($db));
+                    $row=mysqli_num_rows($result);
+                    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+                    $confirm_hashedPwd = password_hash($confirm_password, PASSWORD_DEFAULT);
+                    if ($row > 0)
+                    {
+                    echo "<script>alert('Admin already active!'); window.location='add_admin.php'</script>";
+                    }
+                    else
+                    {       
+                        mysqli_query($db,"INSERT into tbl_admin (firstname, middlename, lastname, email, username, password, confirm_password)
+                        values ('$firstname', '$middlename', '$lastname', '$email','$username','$hashedPwd', '$confirm_hashedPwd')")or die(mysqli_error($con));
+                        echo "<script>alert('Admin successfully added!'); window.location='add_admin.php'</script>";
+                    }
                   }
                   ?>
 
