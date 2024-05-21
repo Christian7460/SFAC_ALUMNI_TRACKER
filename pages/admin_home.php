@@ -347,15 +347,15 @@ require "../includes/sidebar.php";
         </div>
     </div>
 </div>
-        
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-2 col-6">
+
+
+
+<div class="row">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
-            
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
-                <?php
+                <h3><?php
                     $alumni_query = "SELECT alumni_id from tbl_form";
                         $user_query_run = mysqli_query($db, $alumni_query);
 
@@ -364,41 +364,10 @@ require "../includes/sidebar.php";
                         } else {
                             echo '<h4 class="mb-0">0</h4>';
                         }
-                  ?>
-                  <br>
+                  ?></h3>
 
                 <p>Total Alumni</p>
-              </div>
-              <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
-              </div>
-              <a href="#" class="small-box-footer">See More <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-gradient-danger">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          
-          <!-- ./col -->
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-gradient-danger">
-              <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
+                <br>
               </div>
               <div class="icon">
               <i class="nav-icon fas fa-user"></i>
@@ -407,14 +376,25 @@ require "../includes/sidebar.php";
             </div>
           </div>
           <!-- ./col -->
-                   <!-- ./col -->
-                   <div class="col-lg-2 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?php
+                      $alumni_query = "SELECT COUNT(*) AS total_users FROM tbl_form WHERE emp_status_id IN (1, 2, 3)";
+                      $user_query_run = mysqli_query($db, $alumni_query);
 
-                <p>User Registrations</p>
+                      if ($user_query_run) {
+                          $user_total = mysqli_fetch_assoc($user_query_run)['total_users'];
+                          echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                      } else {
+                          echo '<h4 class="mb-0">0</h4>';
+                      }
+
+                      ?>
+                      <br></h3>
+
+                <p>Employed</p>
               </div>
               <div class="icon">
               <i class="nav-icon fas fa-user"></i>
@@ -423,14 +403,62 @@ require "../includes/sidebar.php";
             </div>
           </div>
           <!-- ./col -->
-                   <!-- ./col -->
-                   <div class="col-lg-2 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
-                <h3>44</h3>
+                <h3> <?php
+                  $alumni_query = "SELECT emp_status_id FROM tbl_form WHERE emp_status_id = 4";
+                      $user_query_run = mysqli_query($db, $alumni_query);
 
-                <p>User Registrations</p>
+                      if ($user_total = mysqli_num_rows($user_query_run)) {
+                          echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                      } else {
+                          echo '<h4 class="mb-0">0</h4>';
+                      }
+
+                  ?>        
+                  <br></h3>
+
+                <p>Unemployed</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+
+                    </div>
+
+
+                    <!-- =============================================================== -->
+                    <br>
+                      <h3>
+                        Bacoor Graduates
+                      </h3>
+                    <br>
+
+
+                    <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3><?php
+                    $alumni_query = "SELECT alumni_id from tbl_form WHERE campus_id = '$row[campus_id]'";
+                        $user_query_run = mysqli_query($db, $alumni_query);
+
+                        if ($user_total = mysqli_num_rows($user_query_run)) {
+                            echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                        } else {
+                            echo '<h4 class="mb-0">0</h4>';
+                        }
+                  ?></h3>
+
+                <p>Total Alumni</p>
+                <br>
               </div>
               <div class="icon">
               <i class="nav-icon fas fa-user"></i>
@@ -439,17 +467,93 @@ require "../includes/sidebar.php";
             </div>
           </div>
           <!-- ./col -->
-
-          
-
-                   <!-- ./col -->
-                   <div class="col-lg-2 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?php
+                      $alumni_query = "SELECT COUNT(*) AS total_users FROM tbl_form WHERE emp_status_id IN (1, 2, 3) AND campus_id = '$row[campus_id]'";
+                      $user_query_run = mysqli_query($db, $alumni_query);
 
-                <p>User Registrations</p>
+                      if ($user_query_run) {
+                          $user_total = mysqli_fetch_assoc($user_query_run)['total_users'];
+                          echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                      } else {
+                          echo '<h4 class="mb-0">0</h4>';
+                      }
+
+                      ?>
+                      <br></h3>
+
+                <p>Employed</p>
+              </div>
+              <div class="icon">
+              <i class="nav-icon fas fa-user"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3> <?php
+                  $alumni_query = "SELECT emp_status_id FROM tbl_form WHERE emp_status_id = 4 AND campus_id = '$row[campus_id]'";
+                      $user_query_run = mysqli_query($db, $alumni_query);
+
+                      if ($user_total = mysqli_num_rows($user_query_run)) {
+                          echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                      } else {
+                          echo '<h4 class="mb-0">0</h4>';
+                      }
+
+                  ?>    
+                  <br></h3>
+
+                <p>Unemployed</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+
+                    </div>
+
+
+
+                    <!-- ================================================================= -->
+
+                    <br>
+                      <h3>
+                        Las Piñas Graduates
+                      </h3>
+                    <br>
+
+
+                    <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3><?php
+                    $alumni_query = "SELECT alumni_id from tbl_form";
+                        $user_query_run = mysqli_query($db, $alumni_query);
+
+                        if ($user_total = mysqli_num_rows($user_query_run)) {
+                            echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                        } else {
+                            echo '<h4 class="mb-0">0</h4>';
+                        }
+                  ?></h3>
+
+                <p>Total Alumni</p>
+                <br>
               </div>
               <div class="icon">
               <i class="nav-icon fas fa-user"></i>
@@ -458,15 +562,25 @@ require "../includes/sidebar.php";
             </div>
           </div>
           <!-- ./col -->
-
-          <!-- ./col -->
-          <div class="col-lg-2 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?php
+                      $alumni_query = "SELECT COUNT(*) AS total_users FROM tbl_form WHERE emp_status_id IN (1, 2, 3)";
+                      $user_query_run = mysqli_query($db, $alumni_query);
 
-                <p>User Registrations</p>
+                      if ($user_query_run) {
+                          $user_total = mysqli_fetch_assoc($user_query_run)['total_users'];
+                          echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                      } else {
+                          echo '<h4 class="mb-0">0</h4>';
+                      }
+
+                      ?>
+                      <br></h3>
+
+                <p>Employed</p>
               </div>
               <div class="icon">
               <i class="nav-icon fas fa-user"></i>
@@ -475,39 +589,37 @@ require "../includes/sidebar.php";
             </div>
           </div>
           <!-- ./col -->
-
-                   <!-- ./col -->
-                   <div class="col-lg-2 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-gradient-danger">
+            <div class="small-box bg-danger">
               <div class="inner">
-                <h3>44</h3>
+                <h3> <?php
+                  $alumni_query = "SELECT emp_status_id FROM tbl_form WHERE emp_status_id = 4";
+                      $user_query_run = mysqli_query($db, $alumni_query);
 
-                <p>User Registrations</p>
+                      if ($user_total = mysqli_num_rows($user_query_run)) {
+                          echo '<h4 class="mb-0">' . $user_total . '</h4>';
+                      } else {
+                          echo '<h4 class="mb-0">0</h4>';
+                      }
+
+                  ?>        
+                  <br></h3>
+
+                <p>Unemployed</p>
               </div>
               <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
+                <i class="ion ion-person-add"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
 
-                   <!-- ./col -->
-                   <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-gradient-danger">
-              <div class="inner">
-                <h3>44</h3>
 
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-              <i class="nav-icon fas fa-user"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+
+
+
           <!-- ./col -->
 
           
@@ -528,11 +640,12 @@ require "../includes/sidebar.php";
     <!-- Control sidebar content goes here -->
   <!-- </aside> -->
   <!-- /.control-sidebar -->
-</div><?php 
+</div>
+
+<!-- ./wrapper -->
+<?php 
 include "../includes/footer.php";
 ?>
-<!-- ./wrapper -->
-
 </body>
 </html>
 <?php }else{

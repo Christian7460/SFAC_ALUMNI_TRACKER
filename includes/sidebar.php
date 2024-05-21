@@ -73,7 +73,7 @@ include 'conn.php';
           </li>
           
           <li class="nav-item ">
-            <a href=" pages/news/news-display.php" class="nav-link" >
+            <a href=" ../pages/news/news-display.php" class="nav-link" >
               <i class="nav-icon fas fa-bell"></i>
               <p>
                 News Updates
@@ -81,7 +81,7 @@ include 'conn.php';
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="../pages/job/job-request.php" class="nav-link">
               <i class="nav-icon fas fa-envelope"></i>
               <p>
                 Pending Job Offers
@@ -89,7 +89,7 @@ include 'conn.php';
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="../pages/job/job-display.php" class="nav-link">
               <i class="nav-icon fas fa-clipboard"></i>
               <p>
                 Job Opportunities
@@ -97,7 +97,7 @@ include 'conn.php';
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="../pages/forum/forum-form.php" class="nav-link">
               <i class="nav-icon fas fa-coffee"></i>
               <p>
                 Discussion Forum
@@ -105,7 +105,7 @@ include 'conn.php';
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="../pages/feedback/feedback-display.php" class="nav-link">
               <i class="nav-icon fas fa-check"></i>
               <p>
                 Feedbacks
@@ -156,19 +156,19 @@ include 'conn.php';
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../pages/registrar/registrar-list.php" class="nav-link">
                   <i class="nav-icon fas fa-list"></i>
                   <p>Registrar Lists</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="../pages/alumni/alumni-list.php" class="nav-link">
                   <i class="nav-icon fas fa-list"></i>
                   <p>Alumni Lists</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="../pages/student/student-list.php" class="nav-link">
                   <i class="nav-icon fas fa-list"></i>
                   <p>Student Lists</p>
                 </a>
@@ -215,13 +215,13 @@ include 'conn.php';
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="../pages/news/news-form.php" class="nav-link">
                   <i class="nav-icon fas fa-indent"></i>
                   <p>Add News</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="../pages/donation/donation-form.php" class="nav-link">
                   <i class="nav-icon fas fa-heart"></i>
                   <p>Donation</p>
                 </a>
