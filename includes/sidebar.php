@@ -197,19 +197,19 @@ include 'conn.php';
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="../pages/batch/batch-transition.php" class="nav-link">
                   <i class="nav-icon fas fa-redo"></i>
                   <p>Batch Transition</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="../pages/alumni/alumni-form.php" class="nav-link">
                   <i class="nav-icon fas fa-list"></i>
                   <p>Alumni Form Lists</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="../pages/job/job-form.php" class="nav-link">
                   <i class="nav-icon fas fa-file"></i>
                   <p>Add Job Form</p>
                 </a>
