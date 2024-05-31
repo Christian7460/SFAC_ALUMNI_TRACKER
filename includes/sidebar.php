@@ -746,7 +746,7 @@ include 'conn.php';
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
         <?php 
-    $getImg = mysqli_query($db, "SELECT img FROM tbl_admin WHERE ad_id = '".$_SESSION['userid']."' ");
+    $getImg = mysqli_query($db, "SELECT img FROM tbl_alumni WHERE alumni_id = '".$_SESSION['userid']."' ");
     while ($row = mysqli_fetch_array($getImg)) {
         if (empty($row['img'])) {
             echo '<img class="avatar" style="height:35px; width:35px;" src="../../img/image.png" />';
@@ -759,8 +759,8 @@ include 'conn.php';
         </div>
         <div class="info">
           <a href="./pages/edit_admin.php" class="d-block"><?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
+           if($_SESSION['role'] == "Alumni"){
+            $user = mysqli_query($db,"SELECT * from tbl_alumni where alumni_id = '".$_SESSION['userid']."' ");
             while($row = mysqli_fetch_array($user)){
                 $_SESSION['user'] = $row['lastname'];
                 echo $row['firstname']." ". $row['lastname'];
@@ -812,58 +812,17 @@ include 'conn.php';
           </li>
 
 
-          <h2>Form</h2>
-
-
           <li class="nav-item">
-            <a href="../pages/forum/forum-form.php" class="nav-link">
-              <i class="nav-icon fas fa-coffee"></i>
-              <p>
-                Discussion Forum
-              </p>
+              <h3 class="nav-link">
+                Forms
+              </h3>
             </a>
           </li>
 
- 
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Others
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="../pages/batch/add-batch.php" class="nav-link">
-                  <i class="nav-icon fas fa-plus"></i>
-                  <p>Add Batch</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../pages/batch/batch-transition.php" class="nav-link">
-                  <i class="nav-icon fas fa-redo"></i>
-                  <p>Batch Transition</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../pages/alumni/alumni-form.php" class="nav-link">
-                  <i class="nav-icon fas fa-list"></i>
-                  <p>Alumni Form Lists</p>
-                </a>
-              </li>
               <li class="nav-item">
                 <a href="../pages/job/job-form.php" class="nav-link">
                   <i class="nav-icon fas fa-file"></i>
                   <p>Add Job Form</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../pages/news/news-form.php" class="nav-link">
-                  <i class="nav-icon fas fa-indent"></i>
-                  <p>Add News</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -872,8 +831,6 @@ include 'conn.php';
                   <p>Donation</p>
                 </a>
               </li>
-            </ul>
-          </li>
 
 
         </ul>
