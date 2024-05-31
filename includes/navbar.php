@@ -61,15 +61,3 @@ include 'conn.php';
   </nav>
   <!-- /.navbar -->
 
-  <?php
-if($_SESSION['role'] == "Admin"){
-      echo '
-      ';}
-      
-  elseif($_SESSION['role'] == "Student"){
-    echo '
-    
-';} 
-    else{
-      header("Location:../functions/404.php");
-  } ?>

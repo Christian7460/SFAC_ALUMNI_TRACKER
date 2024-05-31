@@ -5,6 +5,27 @@ include "../../includes/scripts.php";
 include "../../includes/conn.php";
 include "../../includes/sidebar.php";
 
+
+$form_id = $_GET['formID'];
+
+$query = $db->query("SELECT * FROM tbl_form 
+LEFT JOIN tbl_gender ON tbl_gender.gender_id = tbl_form.gender_id 
+LEFT JOIN tbl_campus ON tbl_campus.campus_id = tbl_form.campus_id 
+LEFT JOIN tbl_civil_status ON tbl_civil_status.civil_id = tbl_form.civil_id
+LEFT JOIN tbl_program ON tbl_program.program_id = tbl_form.program_id
+LEFT JOIN tbl_batch ON tbl_batch.batch_id = tbl_form.batch_id
+LEFT JOIN tbl_attainment ON tbl_attainment.attain_id = tbl_form.attain_id
+LEFT JOIN tbl_employment_status ON tbl_employment_status.emp_status_id = tbl_form.emp_status_id
+LEFT JOIN tbl_primary_work_loc ON tbl_primary_work_loc.loc_id = tbl_form.loc_id
+LEFT JOIN tbl_type_org ON tbl_type_org.type_id = tbl_form.type_id
+LEFT JOIN tbl_length_employment ON tbl_length_employment.length_id = tbl_form.length_id
+LEFT JOIN tbl_align ON tbl_align.align_id = tbl_form.align_id
+LEFT JOIN tbl_satisfy ON tbl_satisfy.sat_id = tbl_form.sat_id
+LEFT JOIN tbl_collaborate ON tbl_collaborate.collab_id = tbl_form.collab_id
+WHERE form_id = '$form_id'");
+
+$row_alum = mysqli_fetch_array($query);
+
 if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" || $_SESSION['role'] == "Registrar")
 {
 ?>
@@ -112,204 +133,144 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-            
-
-
-        <section class="content">
-      <div class="container-fluid">
         <div class="row">
           <!-- left column -->
+
+
+          
+          
           <div class="col-md-6">
-
-
-          <div class="card card-danger">
+          <div class="card card-danger"> 
+              <!-- card card-primary -->
               <div class="card-header">
                 <h3 class="card-title">Personal Information</h3>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-3">
-                  <div class="avatar avatar-xl position-relative">
-                    <p>First Name</p>
-                  <h4 >
-                  <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['firstname'];
-                echo $row['firstname'];
-            }
-        }
-                } ?>
-                  </h4>
+              <!-- /.card-header -->
+              <!-- form start -->
 
-                  <br>
-                  <br>
-
-
-                  <p>Gender</p>
-                    <h4>
-                    <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['lastname'];
-                echo $row['firstname']." ". $row['lastname'];
-            }
-        }
-                } ?>
-                    </h4>
-
-
-                    <br>
-                  <br>
-
-
-                    <p>Date of Birth</p>
-                    <h4>
-                    <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['lastname'];
-                echo $row['firstname']." ". $row['lastname'];
-            }
-        }
-                } ?>
-                    </h4>
-
-
-                    <br>
-                  <br>
-
-
-                    <p>Place of Birth</p>
-                    <h4>
-                    <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['lastname'];
-                echo $row['firstname']." ". $row['lastname'];
-            }
-        }
-                } ?>
-                    </h4>
-
-
-                    <br>
-                  <br>
-
-
-                    <p>Civil Status</p>
-                    <h4>
-                    <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['lastname'];
-                echo $row['firstname']." ". $row['lastname'];
-            }
-        }
-                } ?>
-                    </h4>
-
-
-
-
-
-                </div>
-              
+                <div class="card-body">
+                
+                  <div class="form-group">
+                    <span>Firstname</span>
+                  <input type="text" required require id="user_name" class="form-control" name="firstname" value="<?php echo $row_alum['firstname']; ?>" >
+                        
                   </div>
-                  <div class="col-4">
-                  <div class="col-sm-auto col-8 my-auto">
-                <div class="h-100">
-                  <p>Middle Name</p>
-                  <h4>
-                  <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['middlename'];
-                echo $row['middlename'];
-            }
-        }
-                } ?>
-                  </h4>
-                </div>
-              </div>
+                  <div class="form-group">
+                    <span>Middlename</span>
+                  <input type="text" required require name="middlename" class="form-control" value="<?php echo $row_alum['middlename']; ?>" >
+                        
                   </div>
-
-
+                  <div  class="form-group">
+                    <span>Lastname</span>
+                  <input type="text" required require name="lastname" class="form-control" value="<?php echo $row_alum['lastname']; ?>" >
+                        
+                </div>
+                  <div class="form-group">
+                    <span>Gender</span>
+                  <input type="text" required require name="email" class="form-control" value="<?php echo $row_alum['gender']; ?>">
+                        
+                </div>
+                  <div class="form-group">
+                    <span>Campus</span>
+                  <input type="text" required require name="email" class="form-control" value="<?php echo $row_alum['campus']; ?>">
+                        
+                  </div>
+                  <div class="form-group">
+                    <span>Civil Status</span>
+                  <input type="text" required require name="email" class="form-control" value="<?php echo $row_alum['civil']; ?>">
+                        
+                  </div>
+                  <div class="form-group">
+                    <span>E-mail Address</span>
+                  <input type="text" required require name="email" class="form-control" value="<?php echo $row_alum['email']; ?>">
+                        
+                  </div>
+                  <div class="form-group">
+                    <span>Present Address</span>
+                  <input type="text" required require name="pres_address" class="form-control" value="<?php echo $row_alum['address']; ?>">
+                        
+                  </div>
+                  <div class="form-group">
+                    <span>Date of Birth (mm/dd/yyyy)</span>
+                  <input type="text" required require name="date_birth" class="form-control" value="<?php echo $row_alum['date_birth']; ?>" >
+                        
+                  </div>
+                  <div class="form-group">
+                    <span>Birth Place</span>
+                  <input type="text" required require name="birth_place" class="form-control" value="<?php echo $row_alum['birth_place']; ?>">
+                        
+                  </div>
+                  <div class="form-group">
+                    <span>Contact No</span>
+                  <input type="text" required require name="contact" class="form-control" value="<?php echo $row_alum['contact']; ?>">
+                        
+                  </div>
                   
-                  <div class="col-5">
-                  <p>Last Name</p>
-                  <h4>
-                  <?php { 
-           if($_SESSION['role'] == "Admin"){
-            $user = mysqli_query($db,"SELECT * from tbl_admin where ad_id = '".$_SESSION['userid']."' ");
-            while($row = mysqli_fetch_array($user)){
-                $_SESSION['user'] = $row['lastname'];
-                echo $row['lastname'];
-            }
-        }
-                } ?>
-                  </div>
+                  
                 </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+                <!-- /.card-body -->
 
-          <div class="card card-danger">
+                <div class="card-footer">
+                  <button type="submit" name="information" class="btn btn-danger float-right">Update Basic Information</button>
+                </div>
+              </form>
+            </div>
+
+
+          <div class="card card-danger"> 
+              <!-- card card-primary -->
               <div class="card-header">
-                <h3 class="card-title">Change Profile Picture</h3>
+                <h3 class="card-title">Employment Profile</h3>
               </div>
-              <div class="card-body">
+              <!-- /.card-header -->
+              <!-- form start -->
+
+                <div class="card-body">
                 
-              <div class="avatar avatar-xl position-relative">
-                </div>
-                <div class="col-sm-auto col-8 my-auto">
-                <div class="h-100">
-                  <h5 class="mb-1 font-weight-bolder">
-                  
-                  </h5>
-                  <p class="mb-0 font-weight-normal text-sm">
-                  </p>
-                </div>
-              </div>
-                <!-- <br>
-                
-                <br>
-                <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
-
-
-                <br> -->
-
-                
-                <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit-admin.php" class="form">
-
-                  <div class="file-upload-wrapper" data-text="Upload Image">
-                    <input name="image" type="file" class="file-upload-field" value="">
-                    <button type="submit" class="btn bg-gradient-dark btn-sm float-end" name="saveImg">Update Image</button>
+                <h6>In case of self-employment, please answer the following:</h6>
+                  <br>
+                  <div class="form-group"><span>Name of Business</span>
+                  <input type="text" placeholder="Name of Business" name="buss_name" class="form-control" value="<?php echo $row_alum['buss_name']; ?>">
+                        
                   </div>
-                    
-                </form>
+                  <div class="form-group"><span>Nature of Business</span>
+                  <input type="text" placeholder="Nature of Business" id="user_name" name="nat_name" class="form-control" value="<?php echo $row_alum['nat_name']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Role in the Business</span>
+                  <input type="text" placeholder="Role in the Business" name="role_name" class="form-control" value="<?php echo $row_alum['role_name']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Approximate Monthly Profit</span>
+                  <input type="text" placeholder="Approximate Monthly Profit" id="user_name" name="profit" class="form-control" value="<?php echo $row_alum['profit']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Business Address</span>
+                  <input type="text" placeholder="Business Address" name="buss_address" class="form-control" value="<?php echo $row_alum['buss_addr']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Business Phone Numbers</span>
+                  <input type="text" placeholder="Business Phone Numbers" id="user_name" name="buss_no" class="form-control" value="<?php echo $row_alum['buss_no']; ?>">
+                        
+                  </div>
+                  
+                  
+                </div>
+                <!-- /.card-body -->
 
-
-
-              </div>
-              <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" name="information" class="btn btn-danger float-right">Update Basic Information</button>
+                </div>
+              </form>
             </div>
-            <!-- general form elements -->
-            
-
-            <!-- /.card -->
 
           </div>
+
+
+
           <!--/.col (left) -->
           <!-- right column -->
+          
           <div class="col-md-6">
             <!-- Form Element sizes -->
 
@@ -318,42 +279,131 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
             <div class="card card-danger"> 
               <!-- card card-primary -->
               <div class="card-header">
-                <h3 class="card-title">Basic Information</h3>
+                <h3 class="card-title">Educational Background</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
 
-              <?php
-                      $query=mysqli_query($db,"SELECT * FROM tbl_admin
-                       WHERE ad_id='$ad_id'")or die(mysqli_error($db));
-                      $row=mysqli_fetch_array($query);
-                    ?>
-              
-              <form method="POST">
                 <div class="card-body">
+                  <div class="form-group"><span>Bachelor's Degree in SFAC</span>
+                  <input type="text" placeholder="Bachelor's Degree in SFAC"  name="attain_field" class="form-control" value="<?php echo $row_alum['program']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Year Graduated</span>
+                  <input type="text" placeholder="Year Graduated"  name="attain_where" class="form-control" value="<?php echo $row_alum['batch']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Latest Attainment</span>
+                  <input type="text" placeholder="Latest Attainment"  name="attain_field" class="form-control" value="<?php echo $row_alum['attainment']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>What specific field?</span>
+                  <input type="text" placeholder="What specific field?"  name="attain_field" class="form-control" value="<?php echo $row_alum['attain_field']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Name of School</span>
+                  <input type="text" placeholder="Name of School"  name="attain_where" class="form-control" value="<?php echo $row_alum['attain_where']; ?>">
+                        
+                  </div>
                   <div class="form-group">
+                  <h4>Achievements & Rewards</h4>
+                  </div>
+                  <div class="form-group">
+                  <input type="text" placeholder="Please type in here ..." name="achieve_rewards1" class="form-control" value="<?php echo $row_alum['achieve_rewards1']; ?>">
+
+                  </div>
+                  <div class="form-group">
+                  <input type="text" placeholder="Please type in here ..." name="achieve_rewards2" class="form-control" value="<?php echo $row_alum['achieve_rewards2']; ?>">
+
+                  </div>
+                  <div class="form-group">
+                  <input type="text" placeholder="Please type in here ..." name="achieve_rewards3" class="form-control" value="<?php echo $row_alum['achieve_rewards3']; ?>">
+
+                  </div>
+                  <div class="form-group">
+
+                  </div>
+
+                  
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" name="information" class="btn btn-danger float-right">Update Basic Information</button>
+                </div>
+              </form>
+            </div>
+
                     
-                    <label for="firstname">First Name</label>
-                    <input type="text" name="firstname" class="form-control" id="firstname" placeholder="<?php echo $row['firstname']; ?>">
+                      
+                      
+
+
+                  
+            <!-- /.card -->
+
+
+
+
+
+            <div class="card card-danger"> 
+              <!-- card card-primary -->
+              <div class="card-header">
+                <h3 class="card-title">Employment Profile</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+
+                <div class="card-body">
+                  <div class="form-group"><span>Employment Status</span>
+                  <input type="text" placeholder="Employment Status" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['status']; ?>">
+                        
+
                   </div>
-                  <div class="form-group">
-                    <label for="middlename">Middle Name</label>
-                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder="<?php echo $row['middlename']; ?>">
+
+                  <div class="form-group"><span>Current Organization</span>
+                  <input type="text" placeholder="Current Organization" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['current_org']; ?>" >
+                        
                   </div>
-                  <div class="form-group">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" name="lastname" class="form-control" id="lastname" placeholder="<?php echo $row['lastname']; ?>">
+                  <div class="form-group"><span>Primary Work Location</span>
+                  <input type="text" placeholder="Primary Work Location" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['location']; ?>">
+                        
                   </div>
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="<?php echo $row['email']; ?>">
+                  <div class="form-group"><span>Type of Organization</span>
+                  <input type="text" placeholder="Type of Organization" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['type']; ?>">
+                        
                   </div>
-                  <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" class="form-control" id="username" placeholder="<?php echo $row['username']; ?>">
+                  <div class="form-group"><span>Current Job Title / Designation</span>
+                  <input type="text" placeholder="Current Job Title / Designation" name="current_title" class="form-control" value="<?php echo $row_alum['current_title']; ?>">
+                        
                   </div>
-                  <div class="form-group">
+                  <div class="form-group"><span>Company Address</span>
+                  <input type="text" placeholder="Company Address" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['company_add']; ?>">
+                        
                   </div>
+                  <div class="form-group"><span>Length of Employment</span>
+                  <input type="text" placeholder="Length of Employment" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['length']; ?>" >
+                        
+                  </div>
+                  <div class="form-group"><span>Is your job related to your course in SFAC?</span>
+                  <input type="text" placeholder="Is your job related to your course in SFAC?" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['align']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>How satisfied are you with your current job?</span>
+                  <input type="text" placeholder="How satisfied are you with your current job?" id="user_name" name="current_org" class="form-control" value="<?php echo $row_alum['satisfy']; ?>">
+                        
+                  </div>
+                  <div class="form-group"><span>Which of the following would you like to collaborate with us?</span>
+                  <input type="text" placeholder="Which of the following would you like to collaborate with us?"  name="topic" class="form-control" value="<?php echo $row_alum['collaborate']; ?>" >
+                        
+                  </div>
+                  <div class="form-group"><span>topic/area/activity</span>
+                  <input type="text" placeholder="topic/area/activity"  name="topic" class="form-control" value="<?php echo $row_alum['topic']; ?>">
+                        
+                  </div>
+                  
+
+
                   
                 </div>
                 <!-- /.card-body -->
@@ -366,35 +416,11 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
             <!-- /.card -->
 
 
-            <div class="card card-danger"> 
-              <!-- card card-primary -->
-              <div class="card-header">
-                <h3 class="card-title">Change Password</h3>
-              </div>
+         
               <!-- /.card-header -->
               <!-- form start -->
               
-              <form method="POST">
-                <div class="card-body">
-                  <div class="form-group">
-                    
-                    <label for="password">New Passowrd</label>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="New Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password">
-                  </div>
-                  <div class="form-group">
-                  </div>
-                  
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" name="update" class="btn btn-danger float-right">Update Password</button>
-                </div>
-              </form>
+              
             </div>
 
             <?php 

@@ -10,6 +10,11 @@ include "../../includes/conn.php";
             $admin = mysqli_query($db, "SELECT * from tbl_admin where username = '$user_name' ");
             $numrow = mysqli_num_rows($admin);
 
+            $registrar = mysqli_query($db, "SELECT * from tbl_registrar where username = '$user_name' ");
+            $numrow1 = mysqli_num_rows($registrar);
+
+            $alumni = mysqli_query($db, "SELECT * from tbl_alumni where username = '$user_name' ");
+            $numrow2 = mysqli_num_rows($alumni);
             
 
             if($numrow > 0)
@@ -30,42 +35,43 @@ include "../../includes/conn.php";
                   echo "<script>alert('Login Successfully!'); window.location='../admin_home.php'</script>";
                 }
             }
-        //     elseif($numrow1 > 0)
-        //       {   
-        //         while($row = mysqli_fetch_array($student))
-        //         {
-        //           $hashedPwdCheck1 = password_verify($password, $row['password']);
-        //           if ($hashedPwdCheck1 == false) 
-        //           {
-        //             echo "<script>alert('Username or Password do not match!'); window.location='login.php'</script>";
-        //             exit();
-        //           } 
-        //           elseif ($hashedPwdCheck1 == true) 
-        //           {
-        //            $_SESSION['role'] = "Student";
-        //            $_SESSION['userid'] = $row['user_id'];
-        //           } 
-        //           echo "<script>alert('Login Successfully!'); window.location='../students/student_home.php'</script>";
-        //         }
-        //       }
-        //     elseif($numrow2 > 0)
-        //       {   
-        //         while($row = mysqli_fetch_array($admin))
-        //         {
-        //           $hashedPwdCheck1 = password_verify($password, $row['admin_password']);
-        //           if ($hashedPwdCheck1 == false) 
-        //           {
-        //             echo "<script>alert('Username or Password do not match!'); window.location='login.php'</script>";
-        //             exit();
-        //           } 
-        //           elseif ($hashedPwdCheck1 == true) 
-        //           {
-        //            $_SESSION['role'] = "Admin";
-        //            $_SESSION['userid'] = $row['admin_id'];
-        //           } 
-        //           echo "<script>alert('Login Successfully!'); window.location='../admins/admin_home.php'</script>";
-        //         }
-        //       }
+            elseif($numrow1 > 0)
+              {   
+                while($row = mysqli_fetch_array($registrar))
+                {
+                  $hashedPwdCheck1 = password_verify($password, $row['password']);
+                  if ($hashedPwdCheck1 == false) 
+                  {
+                    echo "<script>alert('Username or Password do not match!'); window.location='login.php'</script>";
+                    exit();
+                  } 
+                  elseif ($hashedPwdCheck1 == true) 
+                  {
+                   $_SESSION['role'] = "Registrar";
+                   $_SESSION['userid'] = $row['reg_id'];
+                  } 
+                  echo "<script>alert('Login Successfully!'); window.location='../admin_home.php'</script>";
+                }
+              }
+              elseif($numrow2 > 0)
+              {   
+                while($row = mysqli_fetch_array($alumni))
+                {
+                  $hashedPwdCheck2 = password_verify($password, $row['password']);
+                  if ($hashedPwdCheck2 == false) 
+                  {
+                    echo "<script>alert('Username or Password do not match!'); window.location='login.php'</script>";
+                    exit();
+                  } 
+                  elseif ($hashedPwdCheck2 == true) 
+                  {
+                   $_SESSION['role'] = "Alumni";
+                   $_SESSION['userid'] = $row['alumni_id'];
+                  } 
+                  echo "<script>alert('Login Successfully!'); window.location='../admin_home.php'</script>";
+                }
+              }
+
              else
                 {
                 echo "<script>alert('Invalid Account!'); window.location='login.php'</script>";

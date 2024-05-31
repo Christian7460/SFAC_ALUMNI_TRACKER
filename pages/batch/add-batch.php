@@ -128,19 +128,20 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
           <div class="card">         
             <form method="POST" action="userData/ctrl-add-batch.php">
               <div class="main active">
-                <img class="resize" src="../../assets/img/sfac.png">
+                <!-- <img class="resize" src="../../assets/img/sfac.png"> -->
                 <div class="text">
                 <h2>Add Batch</h2>
                 </div>
                 <div class="input-text">
-                  <div class="input-div">
+                  <div class="input-div"><span>Add batch year</span> <br>
                     <input type="text" required require id="user_name" name="batch">
-                    <span>Add batch year</span>
+                    
                   </div>
                 </div>
             <div class="buttons button_space">
-              <button class="back_button">Back</button>
-              <button class="submit_button" name="submit">Submit</button>
+                <br>
+              <!-- <button class="back_button ">Back</button> -->
+              <button class="btn btn-info submit_button" name="submit">Submit</button>
             </div>
             </div>
             </form>
@@ -152,13 +153,14 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
             <div class="card">   
               <form method="POST" action="userData/ctrl-del-batch.php">                          
               <div class="main active">
-                <img class="resize" src="../../assets/img/sfac.png">
+                <!-- <img class="resize" src="../../assets/img/sfac.png"> -->
                 <div class="text">
                 <h2>Batch List</h2>
                 </div>
                 
                 <div class="input-text">
-                   <select name="batch">                   
+                    <br>
+                   <select name="batch">                   <br>
                           <option selected disabled>Batch List</option>                         
                           <?php
                           foreach ($batch as $Batch) {
@@ -173,8 +175,11 @@ if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" |
                         </select>
                 </div>
 
-            <div class="buttons button_space">             
-              <button type="submit" class="d-sm-inline d-none" name="submit_del" ><i class="material-icons text-sm me-2">delete</i>Delete</button>
+            <div class="buttons button_space"> 
+                <br>            
+              <button type="submit" class="btn btn-danger d-sm-inline d-none" name="submit_del" >
+                <!-- <i class="material-icons text-sm me-2">delete</i> -->
+              Delete</button>
             </div>         
             </div>           
           </div>

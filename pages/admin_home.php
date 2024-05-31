@@ -4,7 +4,7 @@ include "../includes/conn.php";
 include "../includes/navbar.php";
 include "../includes/scripts.php";
 include '../includes/graph-data.php';
-if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" || $_SESSION['role'] == "Registrar")
+if ($_SESSION['role'] == "Super Administrator" || $_SESSION['role'] == "Admin" || $_SESSION['role'] == "Registrar" || $_SESSION['role'] == "Alumni")
 {
 ?>
 <!DOCTYPE html>
@@ -649,5 +649,5 @@ include "../includes/footer.php";
 </body>
 </html>
 <?php }else{
-    header("Location:index.php");
+    header("Location:404.php");
 } ?>
